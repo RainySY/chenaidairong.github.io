@@ -227,6 +227,1268 @@
 
 
   
+    <article id="post-关于使用Gclone搬运他人分享的GD资源" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/06/23/%E5%85%B3%E4%BA%8E%E4%BD%BF%E7%94%A8Gclone%E6%90%AC%E8%BF%90%E4%BB%96%E4%BA%BA%E5%88%86%E4%BA%AB%E7%9A%84GD%E8%B5%84%E6%BA%90/">关于使用Gclone搬运他人分享的GD资源</a>
+    </h1>
+  
+
+        
+        <a href="/2020/06/23/%E5%85%B3%E4%BA%8E%E4%BD%BF%E7%94%A8Gclone%E6%90%AC%E8%BF%90%E4%BB%96%E4%BA%BA%E5%88%86%E4%BA%AB%E7%9A%84GD%E8%B5%84%E6%BA%90/" class="archive-article-date">
+  	<time datetime="2020-06-23T09:52:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-06-23</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="关于使用Gclone搬运他人分享的GD资源"><a href="#关于使用Gclone搬运他人分享的GD资源" class="headerlink" title="关于使用Gclone搬运他人分享的GD资源"></a>关于使用Gclone搬运他人分享的GD资源</h1><p><a href="https://github.com/xyou365/AutoRclone/" target="_blank" rel="noopener">Autorclone地址</a>     <a href="https://www.hostloc.com/thread-643808-1-1.html" target="_blank" rel="noopener">Gclone地址</a></p>
+<p>Google Drive在文件传输这块，每个账号每天只有750G的额度<br>虽然可能对于部分人来说，可能够用了，但是大佬们的资源都是几个T为基数的<br>所以有大佬为突破这个限制做出了以上几个项目</p>
+<h2 id="安装步骤"><a href="#安装步骤" class="headerlink" title="安装步骤"></a>安装步骤</h2><h3 id="一、安装Rclone"><a href="#一、安装Rclone" class="headerlink" title="一、安装Rclone"></a>一、安装Rclone</h3><p>如果已经安装了可跳过该步骤</p>
+<pre><code>curl https://rclone.org/install.sh | sudo bash
+安装原版rclone
+bash &lt;(wget -qO- https://git.io/gclone.sh)
+安装修改后的Gclone</code></pre><h3 id="二、安装Autorclone"><a href="#二、安装Autorclone" class="headerlink" title="二、安装Autorclone"></a>二、安装Autorclone</h3><p><strong>配置环境</strong></p>
+<pre><code>#CentOS系统
+wget https://www.moerats.com/usr/shell/Python3/CentOS_Python3.6.sh &amp;&amp; sh CentOS_Python3.6.sh
+yum install screen git -y
+#Debian系统
+wget https://www.moerats.com/usr/shell/Python3/Debian_Python3.6.sh &amp;&amp; sh Debian_Python3.6.sh
+apt-get install screen git 
+#Ubuntu系统
+apt update
+apt install python3-pip python3-setuptools python3-dev python3-wheel build-essential screen git -y</code></pre><p><strong>安装源码并配置环境</strong><br>    git clone <a href="https://github.com/xyou365/AutoRclone" target="_blank" rel="noopener">https://github.com/xyou365/AutoRclone</a> &amp;&amp; cd AutoRclone &amp;&amp; pip3 install -r requirements.txt</p>
+<h3 id="三、生成SA账号"><a href="#三、生成SA账号" class="headerlink" title="三、生成SA账号"></a>三、生成SA账号</h3><p><strong>1、 让我们仅创建所需的服务帐户。 警告：滥用此功能不是autorclone的目的，我们不建议您做很多项目，只有一个项目和100 sa可以让您大量使用，滥用也可能使您的项目被Google禁止。</strong><br>在<a href="https://developers.google.com/drive/api/v3/quickstart/python" target="_blank" rel="noopener">Python Quickstart </a>中获取你账户的JSON<br><img src="https://cdn.jsdelivr.net/gh/chenaidairong/picture/20200623173154.png" alt=""></p>
+<p><img src="https://cdn.jsdelivr.net/gh/chenaidairong/picture/20200623173254.png" alt=""></p>
+<p><img src="https://cdn.jsdelivr.net/gh/chenaidairong/picture/20200623173417.png" alt=""><br>这一步会得到一个文件，保存它</p>
+<h3 id="四、配置"><a href="#四、配置" class="headerlink" title="四、配置"></a>四、配置</h3><pre><code>python3 gen_sa_accounts.py --quick-setup 1</code></pre><p>最后的1表示创建多少项目，个人建议不需要太多的项目，一个项目一百个账户，也就是一共能传输75TB的资料<br>以此类推<br>然后运行下面的命令，会在ROOT目录生成一个email文件，该文件就是你所创建的账户的所有的邮箱地址</p>
+<pre><code>cat ~/AutoRclone/accounts/*.json | grep &quot;client_email&quot; | awk &apos;{print $2}&apos;| tr -d &apos;,&quot;&apos; | sed &apos;N;N;N;N;N;N;N;N;N;/^$/d;G&apos; &gt; ~/email</code></pre><p>去往<a href="https://groups.google.com/" target="_blank" rel="noopener">Google Group</a>创建一个群组<br>将上面得到的email文件中的邮箱全部加进去<br><img src="https://cdn.jsdelivr.net/gh/chenaidairong/picture/20200623173959.png" alt=""></p>
+<p><img src="https://cdn.jsdelivr.net/gh/chenaidairong/picture/20200623174026.png" alt=""><br>至此，Autorclone的配置全部结束</p>
+<h3 id="四、配置Gclone"><a href="#四、配置Gclone" class="headerlink" title="四、配置Gclone"></a>四、配置Gclone</h3><pre><code>gclone config
+
+[root@izj6cfrhpszlpag2u50h1pz ~]# gclone config
+
+Current remotes:
+
+Name                 Type
+====                 ====
+gc                   drive
+gc1                  drive
+jygd                 drive
+sjhl                 onedrive
+
+e) Edit existing remote
+n) New remote
+d) Delete remote
+r) Rename remote
+c) Copy remote
+s) Set configuration password
+q) Quit config
+e/n/d/r/c/s/q&gt; n
+name&gt; gc
+Remote &quot;gc&quot; already exists.
+name&gt; gc2
+Type of storage to configure.
+Enter a string value. Press Enter for the default (&quot;&quot;).
+Choose a number from below, or type in your own value
+ 1 / 1Fichier
+   \ &quot;fichier&quot;
+ 2 / Alias for an existing remote
+   \ &quot;alias&quot;
+ 3 / Amazon Drive
+   \ &quot;amazon cloud drive&quot;
+ 4 / Amazon S3 Compliant Storage Provider (AWS, Alibaba, Ceph, Digital Ocean, Dreamhost, IBM COS, Minio, etc)
+   \ &quot;s3&quot;
+ 5 / Backblaze B2
+   \ &quot;b2&quot;
+ 6 / Box
+   \ &quot;box&quot;
+ 7 / Cache a remote
+   \ &quot;cache&quot;
+ 8 / Citrix Sharefile
+   \ &quot;sharefile&quot;
+ 9 / Dropbox
+   \ &quot;dropbox&quot;
+10 / Encrypt/Decrypt a remote
+   \ &quot;crypt&quot;
+11 / FTP Connection
+   \ &quot;ftp&quot;
+12 / Google Cloud Storage (this is not Google Drive)
+   \ &quot;google cloud storage&quot;
+13 / Google Drive
+   \ &quot;drive&quot;
+14 / Google Photos
+   \ &quot;google photos&quot;
+15 / Hubic
+   \ &quot;hubic&quot;
+16 / In memory object storage system.
+   \ &quot;memory&quot;
+17 / JottaCloud
+   \ &quot;jottacloud&quot;
+18 / Koofr
+   \ &quot;koofr&quot;
+19 / Local Disk
+   \ &quot;local&quot;
+20 / Mail.ru Cloud
+   \ &quot;mailru&quot;
+21 / Mega
+   \ &quot;mega&quot;
+22 / Microsoft Azure Blob Storage
+   \ &quot;azureblob&quot;
+23 / Microsoft OneDrive
+   \ &quot;onedrive&quot;
+24 / OpenDrive
+   \ &quot;opendrive&quot;
+25 / Openstack Swift (Rackspace Cloud Files, Memset Memstore, OVH)
+   \ &quot;swift&quot;
+26 / Pcloud
+   \ &quot;pcloud&quot;
+27 / Put.io
+   \ &quot;putio&quot;
+28 / QingCloud Object Storage
+   \ &quot;qingstor&quot;
+29 / SSH/SFTP Connection
+   \ &quot;sftp&quot;
+30 / Sugarsync
+   \ &quot;sugarsync&quot;
+31 / Transparently chunk/split large files
+   \ &quot;chunker&quot;
+32 / Union merges the contents of several remotes
+   \ &quot;union&quot;
+33 / Webdav
+   \ &quot;webdav&quot;
+34 / Yandex Disk
+   \ &quot;yandex&quot;
+35 / http Connection
+   \ &quot;http&quot;
+36 / premiumize.me
+   \ &quot;premiumizeme&quot;
+Storage&gt; 13
+** See help for drive backend at: https://rclone.org/drive/ **
+
+Google Application Client Id
+Setting your own is recommended.
+See https://rclone.org/drive/#making-your-own-client-id for how to create your own.
+If you leave this blank, it will use an internal key which is low performance.
+Enter a string value. Press Enter for the default (&quot;&quot;).
+client_id&gt; 
+Google Application Client Secret
+Setting your own is recommended.
+Enter a string value. Press Enter for the default (&quot;&quot;).
+client_secret&gt; 
+Scope that rclone should use when requesting access from drive.
+Enter a string value. Press Enter for the default (&quot;&quot;).
+Choose a number from below, or type in your own value
+ 1 / Full access all files, excluding Application Data Folder.
+   \ &quot;drive&quot;
+ 2 / Read-only access to file metadata and file contents.
+   \ &quot;drive.readonly&quot;
+   / Access to files created by rclone only.
+ 3 | These are visible in the drive website.
+   | File authorization is revoked when the user deauthorizes the app.
+   \ &quot;drive.file&quot;
+   / Allows read and write access to the Application Data folder.
+ 4 | This is not visible in the drive website.
+   \ &quot;drive.appfolder&quot;
+   / Allows read-only access to file metadata but
+ 5 | does not allow any access to read or download file content.
+   \ &quot;drive.metadata.readonly&quot;
+scope&gt; 1
+ID of the root folder
+Leave blank normally.
+
+Fill in to access &quot;Computers&quot; folders (see docs), or for rclone to use
+a non root folder as its starting point.
+
+Note that if this is blank, the first time rclone runs it will fill it
+in with the ID of the root folder.
+
+Enter a string value. Press Enter for the default (&quot;&quot;).
+root_folder_id&gt; 
+Service Account Credentials JSON file path 
+Leave blank normally.
+Needed only if you want use SA instead of interactive login.
+Enter a string value. Press Enter for the default (&quot;&quot;).
+service_account_file&gt; 因为我们在root目录配置的Autorclone，所以此处填写为/root/AutoRclone/accounts/任意一个json文件名
+Enter a string value. Press Enter for the default (&quot;&quot;).
+service_account_file_path&gt; 此处填写/root/AutoRclone/accounts/
+Enter a string value. Press Enter for the default (&quot;&quot;).
+service_account_file_path&gt; 
+Edit advanced config? (y/n)
+y) Yes
+n) No (default)
+y/n&gt; n
+Remote config
+Use auto config?
+ * Say Y if not sure
+ * Say N if you are working on a remote or headless machine
+y) Yes (default)
+n) No
+y/n&gt; n
+Please go to the following link: 这里返回是的一个链接，自行复制粘贴到浏览器完成授权，并获取token
+Log in and authorize rclone for access
+Enter verification code&gt; token输入在这里
+后面会有个让你选择是否为团队盘的选项，认真看一下，选完之后就可以一直回车了</code></pre><p>到这里，AutoRclone和Gclone就完全配置完了<br>以下是copy的命令</p>
+<pre><code>gclone copy 你所配置的名称:{分享文件的ID} gc1:{你目录的ID}/要拷贝的目录 --drive-server-side-across-configs -vvP --ignore-existing --tpslimit 30
+--tpslimit X
+x 为线程数，合理就行
+其他不变</code></pre><p><img src="https://cdn.jsdelivr.net/gh/chenaidairong/picture/20200623175154.png" alt=""><br>划线部分为分享文件的ID目录ID同理</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">onedrive</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">环境</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">git</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">gclone</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">autorclone</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">地址</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">额度</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">enter</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">default</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">drive</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">the</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/未分类//" class="article-tag-list-link color4">未分类</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/06/23/%E5%85%B3%E4%BA%8E%E4%BD%BF%E7%94%A8Gclone%E6%90%AC%E8%BF%90%E4%BB%96%E4%BA%BA%E5%88%86%E4%BA%AB%E7%9A%84GD%E8%B5%84%E6%BA%90/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-如何让你的Windows10更加的适合开发" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/06/07/%E5%A6%82%E4%BD%95%E8%AE%A9%E4%BD%A0%E7%9A%84Windows10%E6%9B%B4%E5%8A%A0%E7%9A%84%E9%80%82%E5%90%88%E5%BC%80%E5%8F%91/">如何让你的Windows10更加的适合开发</a>
+    </h1>
+  
+
+        
+        <a href="/2020/06/07/%E5%A6%82%E4%BD%95%E8%AE%A9%E4%BD%A0%E7%9A%84Windows10%E6%9B%B4%E5%8A%A0%E7%9A%84%E9%80%82%E5%90%88%E5%BC%80%E5%8F%91/" class="archive-article-date">
+  	<time datetime="2020-06-07T04:38:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-06-07</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="我的常用工具合集"><a href="#我的常用工具合集" class="headerlink" title="我的常用工具合集"></a>我的常用工具合集</h1><p><strong>1、python环境</strong></p>
+<p>作为一名正在学习大数据的大学生，python是必备环境</p>
+<p>下载<a href="https://pan.yjsn.club/s/1/%E4%B8%AA%E4%BA%BA%E7%94%B5%E8%84%91%E7%8E%AF%E5%A2%83/python-3.8.3-amd64.exe" target="_blank" rel="noopener">python</a></p>
+<p><strong>Windows10的python环境配置</strong></p>
+<p>如果你没有进行任何设置，而是一步到位的Next</p>
+<p>那么我们只需要一下步骤</p>
+<p><img src="https://cdn.jsdelivr.net/gh/chenaidairong/picture/image-20200607121651455.png" alt="image-20200607121651455"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/chenaidairong/picture/image-20200607121740664.png" alt="image-20200607121740664"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/chenaidairong/picture/image-20200607121803115.png" alt="image-20200607121803115"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/chenaidairong/picture/image-20200607121827487.png" alt="image-20200607121827487"></p>
+<p><strong>请注意一定要是Path！！！！</strong></p>
+<p>双击打开编辑</p>
+<p><img src="https://cdn.jsdelivr.net/gh/chenaidairong/picture/image-20200607121912199.png" alt="image-20200607121912199"></p>
+<p>路径如下</p>
+<pre><code>C:\Users\自己的用户名\AppData\Local\Programs\Python\Python38
+C:\Users\自己的用户名\AppData\Local\Programs\Python\Python38\Scripts</code></pre><p>如果一般来说，环境都是在这个位置，可以直接win+R，输入CMD</p>
+<p>打开命令行界面，输入python，如果有一下反馈<img src="https://cdn.jsdelivr.net/gh/chenaidairong/picture/image-20200607122055519.png" alt="image-20200607122055519"></p>
+<p>即为配置正确</p>
+<p>如果不是的话</p>
+<p>请自行打开python安装包，查询安装位置</p>
+<p>至此，我们的python环境即为配置完全了</p>
+<p><strong>二、Git环境</strong></p>
+<p>作为一个GitHub用户，个人电脑上必备Git</p>
+<p><a href="https://pan.yjsn.club/s/1/%E4%B8%AA%E4%BA%BA%E7%94%B5%E8%84%91%E7%8E%AF%E5%A2%83/Git-2.27.0-64-bit.exe" target="_blank" rel="noopener">GIt下载</a></p>
+<p>Git比较舒服的地方就在于，它不需要我们配置环境变量</p>
+<p>安装好即可使用</p>
+<p><strong>三、PicGo</strong></p>
+<p><img src="https://cdn.jsdelivr.net/gh/chenaidairong/picture/image-20200607122617329.png" alt="image-20200607122617329"></p>
+<p>作为一名博主</p>
+<p>有个图床是必备的，刚刚开始的时候我用的阿里Oss</p>
+<p>发现很容易被人刷钱，我就放弃了</p>
+<p>目前已经全部丢在了Github里面</p>
+<p>关于PIcGO的配置，各位可以查阅这个文章<br><a href="https://pan.yjsn.club/s/1/%E4%B8%AA%E4%BA%BA%E7%94%B5%E8%84%91%E7%8E%AF%E5%A2%83/Git-2.27.0-64-bit.exe" target="_blank" rel="noopener">PicGo下载</a></p>
+<p><a href="[https://picgo.github.io/PicGo-Doc/zh/guide/#%E5%BA%94%E7%94%A8%E6%A6%82%E8%BF%B0](https://picgo.github.io/PicGo-Doc/zh/guide/#应用概述">PicGo配置</a></p>
+<p>我就不在多讲</p>
+<h3 id="三、WIndows10优秀的工具"><a href="#三、WIndows10优秀的工具" class="headerlink" title="三、WIndows10优秀的工具"></a>三、WIndows10优秀的工具</h3><p>1、cmder</p>
+<p>更多接受各位可以去查阅以下</p>
+<p><a href="https://www.jianshu.com/p/5b7c985240a7" target="_blank" rel="noopener">使用Cmder替换cmd，让开发更高效</a></p>
+<p><a href="https://cmder.net/" target="_blank" rel="noopener">官网</a></p>
+<p><a href="https://pan.yjsn.club/s/1/%E4%B8%AA%E4%BA%BA%E7%94%B5%E8%84%91%E7%8E%AF%E5%A2%83/cmder.zip" target="_blank" rel="noopener">下载</a></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">环境</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">git</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">python</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">picgo</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">github</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/未分类//" class="article-tag-list-link color4">未分类</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/06/07/%E5%A6%82%E4%BD%95%E8%AE%A9%E4%BD%A0%E7%9A%84Windows10%E6%9B%B4%E5%8A%A0%E7%9A%84%E9%80%82%E5%90%88%E5%BC%80%E5%8F%91/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-GearMagic@Alpha-20.5.29-For-Redmi-Note-7-Pro-更新内容" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/05/30/GearMagic@Alpha-20.5.29-For-Redmi-Note-7-Pro-%E6%9B%B4%E6%96%B0%E5%86%85%E5%AE%B9/">GearMagic@Alpha 20.5.29 For Redmi Note 7 Pro 更新内容</a>
+    </h1>
+  
+
+        
+        <a href="/2020/05/30/GearMagic@Alpha-20.5.29-For-Redmi-Note-7-Pro-%E6%9B%B4%E6%96%B0%E5%86%85%E5%AE%B9/" class="archive-article-date">
+  	<time datetime="2020-05-30T14:06:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-05-30</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <blockquote>
+<p>GearMagic@Alpha 20.5.29 For Redmi Note 7 Pro 更新内容：</p>
+<ol>
+<li>跟随官方更新到20.5.29</li>
+<li>撤销手动开启SurfaceFlinger缓冲区（官方默认开启了）</li>
+<li>默认使用Skia OpenGL驱动程序</li>
+<li>为本机型解锁完整新版桌面动画，开启K20/K20Pro专属的流畅动画算法，动画更香香</li>
+</ol>
+</blockquote>
+<p>下载地址1<br><a href="https://jq.qq.com/?_wv=1027&k=5bsRzbg" target="_blank" rel="noopener">群聊</a><br>下载地址2<br><a href="https://pan.yjsn.club" target="_blank" rel="noopener">网盘</a></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">20.5.29</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">动画</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">开启</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">默认</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">缓冲区</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/安卓事项//" class="article-tag-list-link color5">安卓事项</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/05/30/GearMagic@Alpha-20.5.29-For-Redmi-Note-7-Pro-%E6%9B%B4%E6%96%B0%E5%86%85%E5%AE%B9/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-termux安装autocx" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/05/30/termux%E5%AE%89%E8%A3%85autocx/">termux安装autocx</a>
+    </h1>
+  
+
+        
+        <a href="/2020/05/30/termux%E5%AE%89%E8%A3%85autocx/" class="archive-article-date">
+  	<time datetime="2020-05-30T10:13:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-05-30</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="Termux运行autocx脚本"><a href="#Termux运行autocx脚本" class="headerlink" title="Termux运行autocx脚本"></a>Termux运行autocx脚本</h1><blockquote>
+<p>这是<a href="https://github.com/Luoofan/autochaoxing" target="_blank" rel="noopener">autocx项目</a>的地址，脚本的使用方法这里不多赘述。有关<a href="https://wiki.archlinux.org/index.php/PRoot_(%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87)" target="_blank" rel="noopener">proot</a>的资料这里也不多说，我们理解成在安卓的兼容层运行了一个和安卓系统同级的linux就好了<br><a href="https://github.com/KimJungWha" target="_blank" rel="noopener">文章作者</a><br>原本想给他作者权限的，但是他不要，让我代发</p>
+</blockquote>
+<p><strong>思路：</strong>  </p>
+<ol>
+<li>autocx是python写的脚本，理论上只要能运行python就可以完美运行脚本。但是在termux环境下有几个需要的模块并没有适配，所以我们先通过Termux跑一个linux，在linux中运行脚本，这里选择debian</li>
+<li>因为涉及到两个环境（termux&amp;&amp;debian）所以分两回执行脚本，下载的脚本中包含了配置proot环境和在proot环境创建另一个脚本两部分</li>
+</ol>
+<h2 id="termx配置"><a href="#termx配置" class="headerlink" title="termx配置"></a>termx配置</h2><ul>
+<li><a href="https://www.lanzous.com/id5gscj" target="_blank" rel="noopener">点击这里下载</a>，安装termux</li>
+<li>因为手机屏幕太小了，我还是电脑ssh吧 ：<code>pkg update &amp;&amp; pkg i openssh</code>，不用ssh的不用安装</li>
+<li>termux执行：<code>sshd</code>开启ssh服务 <code>ip addr</code>查看手机的IP地址,<code>passwd</code>设置密码</li>
+<li>win打开cmd / linux terminal：<code>ssh -p8022 root@手机IP</code>连接手机</li>
+</ul>
+<h2 id="放置脚本"><a href="#放置脚本" class="headerlink" title="放置脚本"></a>放置脚本</h2><ul>
+<li>在帖子里或者<a href="https://www.lanzous.com/id5h9hg" target="_blank" rel="noopener">蓝奏云</a>下载脚本，放到termux根目录。重命名把.txt后缀去掉。如果你的手机文件管理不能识别termux根目录的话，请手动放到<code>/data/data/com.termux/files</code>下</li>
+<li>添加权限：<code>chmod +x termux_autocx.sh</code></li>
+<li>运行脚本，配置proot：<code>./termux_autocx.sh</code><br><a href="https://cdn.jsdelivr.net/gh/chenaidairong/picture/usr/uploads/2020/05/110086176.txt" target="_blank" rel="noopener">脚本链接</a><h2 id="配置proot"><a href="#配置proot" class="headerlink" title="配置proot"></a>配置proot</h2></li>
+<li>在脚本的提示下输入<code>atilo run debian</code>进入proot</li>
+<li><code>chmod +x install.sh</code>添加权限</li>
+<li><code>./install.sh</code>执行脚本，配置脚本环境</li>
+</ul>
+<p>enjoy that！</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">安卓</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">手机</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">data</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">脚本</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">termux</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">proot</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">ssh</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">linux</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/网课//" class="article-tag-list-link color3">网课</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/05/30/termux%E5%AE%89%E8%A3%85autocx/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-小白福利-（无图高能预警）万能刷机指南" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/05/28/%E5%B0%8F%E7%99%BD%E7%A6%8F%E5%88%A9-%EF%BC%88%E6%97%A0%E5%9B%BE%E9%AB%98%E8%83%BD%E9%A2%84%E8%AD%A6%EF%BC%89%E4%B8%87%E8%83%BD%E5%88%B7%E6%9C%BA%E6%8C%87%E5%8D%97/">小白福利 （无图高能预警）万能刷机指南</a>
+    </h1>
+  
+
+        
+        <a href="/2020/05/28/%E5%B0%8F%E7%99%BD%E7%A6%8F%E5%88%A9-%EF%BC%88%E6%97%A0%E5%9B%BE%E9%AB%98%E8%83%BD%E9%A2%84%E8%AD%A6%EF%BC%89%E4%B8%87%E8%83%BD%E5%88%B7%E6%9C%BA%E6%8C%87%E5%8D%97/" class="archive-article-date">
+  	<time datetime="2020-05-28T14:43:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-05-28</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="一、关于刷机"><a href="#一、关于刷机" class="headerlink" title="一、关于刷机"></a>一、关于刷机</h2><p><strong>1、刷机的定义</strong></p>
+<p>刷机，「刷」一词是它的英文名「Flash」音译而来，泛指通过软件或者手机自身的OTA文件对系统文件进行更改和升级从而使手机达到自己想要的或者更好的使用效果，即给手机安装操作系统。</p>
+<p>刷机主要分为两种，为线刷和卡刷。线刷是指使用USB数据线连接个人计算机，并在个人计算机上使用刷机软件（包括ADB）进行刷机的行为；而卡刷则是把固件或者升级包拷贝到手机SD卡中进行刷机升级操作。 线刷和卡刷的本质区别在于Recovery（恢复模式），即 rec（如TWRP）。</p>
+<p><strong>2、刷机的目的</strong></p>
+<p>刷机的目的在于为设备提供更高层度的自定义，用户由此可以去除原装系统的种种限制，从而拥有该设备的绝对控制权。</p>
+<h2 id="二、刷机前的准备"><a href="#二、刷机前的准备" class="headerlink" title="二、刷机前的准备"></a>二、刷机前的准备</h2><p><strong>1、做好准备！</strong></p>
+<p>刷机赋予了用户极高的权限，用户可以对该设备进行任何方式，任何程度的改造，但这也带来了一定的风险。如果你选择刷机，那么请务必做好万全的准备，请随时备份您的数据，随时为自己准备一条「后路」。如果你从未刷过机，那么在刷机的过程中，可能会出现大大小小的错误。这些障碍很可能会击溃你的信心，请做好准备！<br>注意：刷机后你可能会遇到系统不稳定、bug频繁、耗电飞快等问题，请在熟悉操作后自己摸索或求助他人解决。有时候，第三方Rom（操作系统）并不比官方系统适合你。</p>
+<p><strong>2、刷机入门</strong></p>
+<p>请注意，本文使用的也推荐使用的刷机方式为卡刷，较为方便，适合初学者；线刷多用在售后恢复官方系统（如Miflash Pro，教程参考 <a href="https://mp.weixin.qq.com/s/vboUMwVdvAQf_qJpidXgNg" target="_blank" rel="noopener">https://mp.weixin.qq.com/s/vboUMwVdvAQf_qJpidXgNg</a> ），较为麻烦但相对可靠。</p>
+<p><strong>3、解锁（根据不同机型百度搜索 你的机型+bl解锁 ）</strong></p>
+<p>这里的解锁是指「BL锁」，BL是bootloader的简称，就是「开机引导程序」 。Bootloader锁，主要是在引导过程中对系统签名，内核签名及Recovery签名进行检验，如果签名不一致，即终止引导。它是限制用户刷第三方ROM和第三方recovery以及限制root的「锁」，锁住recovery和fastboot不会被其他东西随意刷机和篡改。BL锁未解开状态下无法root也无法刷第三方ROM，因为刷第三方ROM就必须要刷入第三方REC。</p>
+<p><strong>4、Recovery的选择</strong></p>
+<p>卡刷，需要第三方rec的支持（官方rec严禁刷写第三方系统）。第三方rec（如TWRP）需要通过电脑ADB刷入（后面会讲）。选择一个好的Recovery相当关键，目前较为好用的第三方Recovery有： Orange Fox（推荐）、Peter’sTWRP、wzsx’sTWRP。都基于TWRP制作，其中推荐OrangeFox（橙狐rec），界面美观，拥有众多实用功能，不易翻车，下载地址： <a href="https://sourceforge.net/projects/orangefox/files/" target="_blank" rel="noopener">https://sourceforge.net/projects/orangefox/files/</a></p>
+<p><strong>5、关于底包</strong></p>
+<p>我们平时刷第三方 ROM，实际上只是刷了 boot 和 system 两个分区（俗称内核和系统）。对于大多数手机来说，除了这两个分区，还包括了大家俗称的基带、Modem、TrustZone 等必不可少的分区。</p>
+<p>这些分区的版本是需要和系统或内核里相关的驱动版本一致才可以正常工作。比方说，假如系统里的驱动更新了，而 TrustZone 没有更新，那么指纹传感器可能会不正常；Modem 版本不对，可能会没有网络。而每次都下载官方完整包十分麻烦，这就促使了底包的诞生。底包在保证体积的同时拥有和完整包相同的作用。大家可以去「MIUI firmware」官网下载最新开发版底包，下载地址： <a href="https://xiaomifirmwareupdater.com" target="_blank" rel="noopener">https://xiaomifirmwareupdater.com</a></p>
+<p><strong>6、关于「双清」、「四清」和「格式化Data」</strong></p>
+<p>双清（即恢复出厂设置）是指清除data和cache分区，cache是系统缓存，data是应用数据和用户设置。双清会清除用户的所有应用数据、照片、音乐和其他用户数据 ，但保留sdcard上的文件。</p>
+<p>四清是在以上基础加上system和dalvik cache分区，system是系统分区，dalvik cache是开机时产生的缓存，清除以后开机因为要重建缓存，时间会较长。而格式化Data适用于设备被加密的情况下，会清除设备的一切数据，包括sdcard上的文件（除了rec）。</p>
+<p>注意，其中只有清除data分区时会清除用户数据，清除system分区时会清除所有系统文件，格式化Data后会清除一切数据。dalvik cache和cache因为是缓存，清除后不会对数据有任何影响。</p>
+<p><strong>7、选择Rom</strong></p>
+<p>在做好以上准备后，请下载好你想要刷的Rom，这里我可以给予你一些建议。如果你想要刷入MIUI官改的话，建议不要刷一些过于小众的包，因为有可能它内置了许多广告及垃圾软件甚至病毒。如果你想要刷入其他厂商的定制UI（移植包），千万做好bug满天飞的心理准备，这可能极不稳定。如果你想要刷类原生系统的话，建议刷入Havoc-OS或Pixel experience。如果你想“养老”的话可以刷入LineageOS</p>
+<p>当然了还有很多不同的rom包，这要你自己去发现实验了。</p>
+<h2 id="三、刷机进行时（请确保你的设备已解锁）"><a href="#三、刷机进行时（请确保你的设备已解锁）" class="headerlink" title="三、刷机进行时（请确保你的设备已解锁）"></a>三、刷机进行时（请确保你的设备已解锁）</h2><p><strong>1、刷入rec</strong></p>
+<p>首先，在电脑中下载「秋之盒」ADB工具箱（ <a href="https://atmb.top" target="_blank" rel="noopener">https://atmb.top</a> ），并把下载好的 rec 文件压缩包解压。</p>
+<p>打开「秋之盒」，然后将手机重启至fastboot模式（关机状态下长按 电源键+音量下键）。此时「秋之盒」应该已经检测到你的设备，请双击「刷入rec」选项，选择你刚刚解压好的 rec 文件（img格式），然后长按 电源键+音量上键，即可重启至恢复模式（rec）。</p>
+<p><strong>2、格式化Data（Format Data）</strong></p>
+<p>在大多数时候刷机时不需要格式化Data，但为了保险起见，这样做可以减少很多麻烦。MIUI和类原生系统因为区别较大，互刷需要格式化Data，而如果是类原生系统和另一个类原生系统的话，应该可以不用格式化Data（除非作者加密了）。但是如果你遇到了麻烦和错误，格式化Data仍然是最可靠的方法。注意，格式化Data后所有数据会被清除，所以请备份好数据，并把Rom和底包暂时放入电脑，格式化完成后再放入sdcard中</p>
+<p><strong>3、四清</strong></p>
+<p>即便双清已经足够了，四清可以避免很多玄学bug。所以请在rec的高级清除内，清除「Dalvik / ART Cache」、「Cache」「Data（数据）」、「System」、「Vendor（驱动）」，其中「Vendor」仅在橙狐rec中有，在TWRP中只需四清即可。</p>
+<p><strong>4、刷入底包</strong></p>
+<p>请在「文件」选项卡中找到下载好的底包（不用解压），然后直接刷入。（所谓底包就是你下载好的zip）</p>
+<p><strong>5、刷入Rom</strong></p>
+<p>请在「文件」选项卡中找到下载好的Rom（不用解压），然后直接刷入。请确保刷机包的机型与该设备一致，否则可能会损坏设备。</p>
+<p><strong>6、重启</strong></p>
+<p>点击「重启」，即可重启至系统界面。</p>
+<h2 id="四、附录"><a href="#四、附录" class="headerlink" title="四、附录"></a>四、附录</h2><p><strong>1、Magisk的刷入</strong></p>
+<p>请直接在rec中刷入Magisk安装包，不用双清；或使用橙狐rec自带的Magisk刷入功能。</p>
+<p><strong>2、关于谷歌验证</strong></p>
+<p>［关于谷歌验证］：建议提前下载好跳过谷歌验证模块以防万一（ <a href="https://www.lanzous.com/ialoe3c" target="_blank" rel="noopener">https://www.lanzous.com/ialoe3c</a> ）。刷入Rom后再刷入Magisk，然后开机加载完谷歌验证后再重启到rec，直接刷入此模块，开机后此模块会自动删除，且没有副作用。</p>
+<p><strong>3、刷入内核</strong></p>
+<p>刷入方法：先进rec备份「boot」分区，然后刷入内核，再重新刷入magisk，然后开机。如果开机卡厂商Logo，请去rec恢复刚才备份的「boot」分区，然后尝试其他内核（这个内核不适合你）</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">手机</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">data</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">内核</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">刷</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">rec</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">格式化</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">rom</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/安卓事项//" class="article-tag-list-link color5">安卓事项</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/05/28/%E5%B0%8F%E7%99%BD%E7%A6%8F%E5%88%A9-%EF%BC%88%E6%97%A0%E5%9B%BE%E9%AB%98%E8%83%BD%E9%A2%84%E8%AD%A6%EF%BC%89%E4%B8%87%E8%83%BD%E5%88%B7%E6%9C%BA%E6%8C%87%E5%8D%97/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-Linux一键安装Aria2-+-AriaNg-+-FileBrowser，实现离线下载、文件管理、在线播放等功能。" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/05/24/Linux%E4%B8%80%E9%94%AE%E5%AE%89%E8%A3%85Aria2-+-AriaNg-+-FileBrowser%EF%BC%8C%E5%AE%9E%E7%8E%B0%E7%A6%BB%E7%BA%BF%E4%B8%8B%E8%BD%BD%E3%80%81%E6%96%87%E4%BB%B6%E7%AE%A1%E7%90%86%E3%80%81%E5%9C%A8%E7%BA%BF%E6%92%AD%E6%94%BE%E7%AD%89%E5%8A%9F%E8%83%BD%E3%80%82/">Linux一键安装Aria2 + AriaNg + FileBrowser，实现离线下载、文件管理、在线播放等功能。</a>
+    </h1>
+  
+
+        
+        <a href="/2020/05/24/Linux%E4%B8%80%E9%94%AE%E5%AE%89%E8%A3%85Aria2-+-AriaNg-+-FileBrowser%EF%BC%8C%E5%AE%9E%E7%8E%B0%E7%A6%BB%E7%BA%BF%E4%B8%8B%E8%BD%BD%E3%80%81%E6%96%87%E4%BB%B6%E7%AE%A1%E7%90%86%E3%80%81%E5%9C%A8%E7%BA%BF%E6%92%AD%E6%94%BE%E7%AD%89%E5%8A%9F%E8%83%BD%E3%80%82/" class="archive-article-date">
+  	<time datetime="2020-05-23T18:52:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-05-24</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h1><pre><code>#海外
+bash &lt;(curl -Lsk https://raw.githubusercontent.com/helloxz/ccaa/master/ccaa.sh)
+#国内
+bash &lt;(curl -Lsk https://raw.githubusercontent.com/helloxz/ccaa/master/ccaa.sh) cdn</code></pre><p>如果出现-bash: curl: command not found错误，说明curl命令没安装，请输入下面的命令先安装curl，再回过头来执行上面的命令。</p>
+<pre><code>#Debian or Ubuntu
+apt-get -y install curl
+#CentOS
+yum -y install curl</code></pre><p>如果不出现错误，会看到下面的界面，根据提示输入1安装CCAA<br><img src="https://yjsnpicture.oss-cn-beijing.aliyuncs.com/2020/05/24/a1fb439793570.png" alt=""><br>根据提示设置下载路径、RPC密钥（稍后需要使用）<br><img src="https://yjsnpicture.oss-cn-beijing.aliyuncs.com/2020/05/24/c2bdd43653e57.png" alt=""><br>装完毕后会提示访问地址、Aria2 RPC 密钥、File Browser 用户名、密码<br><img src="https://yjsnpicture.oss-cn-beijing.aliyuncs.com/2020/05/24/b5287811b1eff.png" alt=""><br>根据提示输入<a href="http://IP：6080/打开AriaNg界面，依次打开AriaNg设置">http://IP：6080/打开AriaNg界面，依次打开AriaNg设置</a> - RPC ，填写Aria2 RPC 密钥，然后刷新页面，至此已经完成，可以愉快的开始下片啦。</p>
+<h2 id="Docker方式安装"><a href="#Docker方式安装" class="headerlink" title="Docker方式安装"></a>Docker方式安装</h2><pre><code>docker run --name=&quot;ccaa&quot; -d -p 6080:6080 -p 6081:6081 -p 6800:6800 -p 51413:51413 \
+    -v /data/ccaaDown:/data/ccaaDown \
+    -e PASS=&quot;xiaoz.me&quot; \
+    helloz/ccaa \
+    sh -c &quot;dccaa pass &amp;&amp; dccaa start&quot;</code></pre><ul>
+<li><p>第一个/data/ccaaDown为本地目录，CCAA下载后的内容会保存在此目录，请根据自身情况设置</p>
+</li>
+<li><p>xiaoz.me为Aria2密钥，运行的时候请修改为自己的密码</p>
+</li>
+<li><p>文件管理默认用户名为ccaa，密码为admin，登录后可在后台修改</p>
+<h2 id="常用命令"><a href="#常用命令" class="headerlink" title="常用命令"></a>常用命令</h2><p> #进入CCAA管理界面<br> ccaa<br> #查看ccaa状态<br> ccaa status<br> #启动ccaa<br> ccaa start<br> #停止ccaa<br> ccaa stop<br> #重启ccaa<br> ccaa restart<br> #查看当前版本<br> ccaa -v</p>
+</li>
+</ul>
+<h3 id="注意事项"><a href="#注意事项" class="headerlink" title="注意事项"></a>注意事项</h3><ul>
+<li>如果服务器有启用安全组，请务必在安全组放行以下端口：6080/6800/6081/6998/51413</li>
+<li>大部分服务商是禁止下载BT的，若因违规使用导致服务器被封本人不承担任何责任</li>
+</ul>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">VPS</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">aria2</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">一键安装</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/网站事项//" class="article-tag-list-link color5">网站事项</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/05/24/Linux%E4%B8%80%E9%94%AE%E5%AE%89%E8%A3%85Aria2-+-AriaNg-+-FileBrowser%EF%BC%8C%E5%AE%9E%E7%8E%B0%E7%A6%BB%E7%BA%BF%E4%B8%8B%E8%BD%BD%E3%80%81%E6%96%87%E4%BB%B6%E7%AE%A1%E7%90%86%E3%80%81%E5%9C%A8%E7%BA%BF%E6%92%AD%E6%94%BE%E7%AD%89%E5%8A%9F%E8%83%BD%E3%80%82/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-一键安装docker与超星自动刷课脚本" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/05/24/%E4%B8%80%E9%94%AE%E5%AE%89%E8%A3%85docker%E4%B8%8E%E8%B6%85%E6%98%9F%E8%87%AA%E5%8A%A8%E5%88%B7%E8%AF%BE%E8%84%9A%E6%9C%AC/">一键安装docker与超星自动刷课脚本</a>
+    </h1>
+  
+
+        
+        <a href="/2020/05/24/%E4%B8%80%E9%94%AE%E5%AE%89%E8%A3%85docker%E4%B8%8E%E8%B6%85%E6%98%9F%E8%87%AA%E5%8A%A8%E5%88%B7%E8%AF%BE%E8%84%9A%E6%9C%AC/" class="archive-article-date">
+  	<time datetime="2020-05-23T18:26:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-05-24</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="提醒"><a href="#提醒" class="headerlink" title="提醒"></a>提醒</h2><p>超星已经将阿里云的和腾讯云的服务器ip地址ban掉了，请自行使用其他运营商的服务器</p>
+<h2 id="源项目"><a href="#源项目" class="headerlink" title="源项目"></a>源项目</h2><p>项目地址<a href="https://github.com/chenaidairong/autochaoxing" target="_blank" rel="noopener">autochaoxing</a></p>
+<h2 id="使用方法"><a href="#使用方法" class="headerlink" title="使用方法"></a>使用方法</h2><p><a href="https://pan.yjsn.club/s/1/chaoxing.sh.tar.gz" target="_blank" rel="noopener">脚本地址</a><br>下载后上传至服务器<br>或者直接命令下载</p>
+<pre><code>wget https://pan.yjsn.club/s/1/chaoxing.sh.tar.gz
+tar -xzvf chaoxing.sh.tar.gz
+chmod -x chaoxing.sh
+bash chaoxing.sh</code></pre><p>已经是全自动跑完了<br>如有问题，欢迎反馈</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">VPS</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">docker</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/网课//" class="article-tag-list-link color3">网课</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/05/24/%E4%B8%80%E9%94%AE%E5%AE%89%E8%A3%85docker%E4%B8%8E%E8%B6%85%E6%98%9F%E8%87%AA%E5%8A%A8%E5%88%B7%E8%AF%BE%E8%84%9A%E6%9C%AC/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-关于求生之路2老铁RPG服务器的相关事项" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/04/27/%E5%85%B3%E4%BA%8E%E6%B1%82%E7%94%9F%E4%B9%8B%E8%B7%AF2%E8%80%81%E9%93%81RPG%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%9A%84%E7%9B%B8%E5%85%B3%E4%BA%8B%E9%A1%B9/">关于求生之路2老铁RPG服务器的相关事项</a>
+    </h1>
+  
+
+        
+        <a href="/2020/04/27/%E5%85%B3%E4%BA%8E%E6%B1%82%E7%94%9F%E4%B9%8B%E8%B7%AF2%E8%80%81%E9%93%81RPG%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%9A%84%E7%9B%B8%E5%85%B3%E4%BA%8B%E9%A1%B9/" class="archive-article-date">
+  	<time datetime="2020-04-27T11:59:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-04-27</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><a href="https://jq.qq.com/?_wv=1027&k=5uIXcoY" target="_blank" rel="noopener">加群地址</a></p>
+<p><strong>一、完整的游戏体验</strong><br>进入游戏前，必须要打上八人MOD，（如果你是第一个进游戏的，那就是必须的）<br>MOD路径：</p>
+<blockquote>
+<p>steamapps\common\left4dead2\addons文件夹<br>将下面的文件，放入以上路径即可<br><a href="https://wwwcdn.chenaidairong.xyz/#/s/rEfa" target="_blank" rel="noopener">八人MOD下载</a></p>
+</blockquote>
+<hr>
+<p><strong>二、第三方地图下载</strong><br>群里我已经给了相关的工具<br>或者你也可以直接在这里下载，第三方地图的地址为</p>
+<blockquote>
+<p><a href="https://wwwcdn.chenaidairong.xyz/#/s/QxCD" target="_blank" rel="noopener">第三方地图</a><br><a href="https://www.chenaidairong.xyz/usr/uploads/2020/04/283777734.zip" target="_blank" rel="noopener">完美版IDM</a><br>IDM在打开运行的时候，你的浏览器一般会提示你安装一些扩展，一定要安装上，不然可能无法调用链接<br>虽然单线程也可以下（也就是所谓的浏览器自带下载）一般只有几百Kb的速度<br>打开网页，复制下载链接，使用IDM进行下载<br>设置在下载&gt;选项&gt;链接 即可看到下面的设置图，将连接数设置成32位<br>其他不变<br><img src="https://www.chenaidairong.xyz/usr/uploads/2020/04/3805189590.png" alt="批注 2020-04-27 200944.png"></p>
+</blockquote>
+<p>下篇文章可能会去做一下职业介绍吧<br>到时候再看，有什么不懂的可以来问我，我就在群里，昵称叫做：作死的白学家</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">求生之路2</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">RPG服务器</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/求生之路//" class="article-tag-list-link color5">求生之路</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/04/27/%E5%85%B3%E4%BA%8E%E6%B1%82%E7%94%9F%E4%B9%8B%E8%B7%AF2%E8%80%81%E9%93%81RPG%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%9A%84%E7%9B%B8%E5%85%B3%E4%BA%8B%E9%A1%B9/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-利用golndex和heroku实现从GD盘下载文件并自动上传到OD盘的一些想法" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/04/23/%E5%88%A9%E7%94%A8golndex%E5%92%8Cheroku%E5%AE%9E%E7%8E%B0%E4%BB%8EGD%E7%9B%98%E4%B8%8B%E8%BD%BD%E6%96%87%E4%BB%B6%E5%B9%B6%E8%87%AA%E5%8A%A8%E4%B8%8A%E4%BC%A0%E5%88%B0OD%E7%9B%98%E7%9A%84%E4%B8%80%E4%BA%9B%E6%83%B3%E6%B3%95/">利用golndex和heroku实现从GD盘下载文件并自动上传到OD盘的一些想法</a>
+    </h1>
+  
+
+        
+        <a href="/2020/04/23/%E5%88%A9%E7%94%A8golndex%E5%92%8Cheroku%E5%AE%9E%E7%8E%B0%E4%BB%8EGD%E7%9B%98%E4%B8%8B%E8%BD%BD%E6%96%87%E4%BB%B6%E5%B9%B6%E8%87%AA%E5%8A%A8%E4%B8%8A%E4%BC%A0%E5%88%B0OD%E7%9B%98%E7%9A%84%E4%B8%80%E4%BA%9B%E6%83%B3%E6%B3%95/" class="archive-article-date">
+  	<time datetime="2020-04-23T14:49:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-04-23</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>目前这个想法，我已经是成功实现了，因为部分ROM的开发者会将自己的制作的ROM发布在Google Drive里面<br>这也成为了部分人的一个限制；而且，即使你有足够的流量去Google Drive里面下载文件，他也会在你即将下载完成的时候，限制你的下载速度，或者直接断开，这是我们的一个遗憾<br>而现在，我想到在GitHub里面有这么几个项目，利用cloudflare的worker功能，与Google Drive，实现无特殊环境下载Google Drive 的文件，并且利用Heroku建立的Aria2离线下载上传至你的OneDrive盘，<br>具体的想法我尽量的整理一下，分成几个文章进行编写</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">aria2</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">onedrive</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">Google Drive</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Heroku</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/网站事项//" class="article-tag-list-link color5">网站事项</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/04/23/%E5%88%A9%E7%94%A8golndex%E5%92%8Cheroku%E5%AE%9E%E7%8E%B0%E4%BB%8EGD%E7%9B%98%E4%B8%8B%E8%BD%BD%E6%96%87%E4%BB%B6%E5%B9%B6%E8%87%AA%E5%8A%A8%E4%B8%8A%E4%BC%A0%E5%88%B0OD%E7%9B%98%E7%9A%84%E4%B8%80%E4%BA%9B%E6%83%B3%E6%B3%95/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+  
+    <nav id="page-nav">
+      <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/">Next &amp;raquo;</a>
+    </nav>
   
 
 
@@ -318,6 +1580,202 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
             <input type="checkbox" q-on="click:toggleTag(e)" q-attr="checked:showTags">
           </label>
           <ul class="article-tag-list" q-show="showTags">
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">20.5.29</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">动画</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">开启</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">默认</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">缓冲区</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">VPS</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">aria2</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">一键安装</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">安卓</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">GSI</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">类原生</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">闲聊</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">手机</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">data</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">脚本</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">termux</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">proot</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">ssh</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">linux</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">docker</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">内核</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">kmou424</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">onedrive</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">环境</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">git</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">gclone</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">autorclone</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">地址</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">额度</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">enter</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">default</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">drive</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">the</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">续航</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">求生之路2</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">RPG服务器</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">网课</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">Google Drive</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">Heroku</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">python</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">picgo</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">github</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">刷</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">rec</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">格式化</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">rom</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">服务器</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">白嫖</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">域名</a>
+              </li>
             
             <div class="clearfix"></div>
           </ul>
